@@ -1,0 +1,21 @@
+<h2>Create Post</h2>
+<form (submit)="onAddPost(form)" #form="ngForm">
+  <mat-card>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Title</mat-label>
+      <input matInput name="title" ngModel required #title="ngModel">
+      <mat-error *ngIf="title.invalid">Please enter title!</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="6" name="description" ngModel required #desciption="ngModel"></textarea>
+      <mat-error *ngIf="desciption.invalid">Please enter description!</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="accent" type="submit">Save</button>
+  </mat-card>
+</form>
+
+<hr>
+
