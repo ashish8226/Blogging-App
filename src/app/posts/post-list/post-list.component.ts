@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Post} from '../../models/post';
 import {PostService} from '../../services/post.service';
 import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-post-list',
@@ -16,21 +17,39 @@ export class PostListComponent implements OnInit, OnDestroy {
   //   {title: 'Third Post', description: 'Description of third post'}
   //   ];
   posts: Post[] = [];
+  isLoading=false;
   private postSubscription: Subscription;
 
   constructor(private postService: PostService) {
   }
 
   ngOnInit(): void {
+    this.isLoading=true;
     this.postService.getPosts();
-    this.postService.getPostUpdateListener().subscribe((data) => {
-      this.posts = data;
-      console.log(this.posts,'in post list');
-    });
+    this.postSubscription=this.postService.getPostUpdateListener().subscribe((posts)=>{
+      this.posts=posts;
+      this.isLoading=false;
+    })
+
+   // this.postService.getPosts().subscribe((data)=>{
+   //   console.log("success",data,typeof data);
+   //   this.posts=data.posts;
+   // },error => {
+   //   console.log('error',error);
+   // });
   }
+
 
   ngOnDestroy() {
     this.postSubscription.unsubscribe();
   }
 
+  onUpdate(id: string) {
+
+  }
+
+  onDelete(id: string) {
+    console.log(id + " pressed")
+    this.postService.deletePost(id);
+  }
 }

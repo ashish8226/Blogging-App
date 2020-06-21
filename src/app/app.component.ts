@@ -8,9 +8,5 @@ import {Post} from './models/post';
 })
 export class AppComponent {
   title = 'impressions';
-  posts: Post[] = [];
 
-  onAddedPost(post) {
-    this.posts.push(post);
-  }
 }
