@@ -4,6 +4,7 @@ import {Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class PostService {
 
   private posts: Post[] = [];
   private postUpdated = new Subject<{posts: Post[], postCount: number}>();
-  private blogUrl = 'http://localhost:4000/api/blogs/';
+  private blogUrl = environment.apiUrl+'blogs/';
 
   constructor(private http: HttpClient, private router: Router) {
   }
