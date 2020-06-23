@@ -1,14 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {PostListComponent} from './posts/post-list/post-list.component';
 import {CreatePostComponent} from './posts/create-post/create-post.component';
+import {LoginComponent} from './auth/login/login.component';
+import {SignupComponent} from './auth/signup/signup.component';
+import {AuthService} from './services/auth.service';
+import {AuthGuard} from './auth/auth.guard';
 
-const routes:Routes=[
-  {path:'',component:PostListComponent},
-  {path:'create',component:CreatePostComponent},
-  {path:'edit/:id',component:CreatePostComponent}
-]
+const routes: Routes = [
+  {path: '', component: PostListComponent},
+  {path: 'create', component: CreatePostComponent, canActivate: [AuthGuard]},
+  {path: 'login', component: LoginComponent},
+  {path: 'signUp', component: SignupComponent},
+  {path: 'edit/:id', component: CreatePostComponent, canActivate: [AuthGuard]}
+];
 
 @NgModule({
   declarations: [],
@@ -16,8 +22,9 @@ const routes:Routes=[
     CommonModule,
     RouterModule.forRoot(routes)
   ],
-  exports:[
+  exports: [
     RouterModule
   ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
